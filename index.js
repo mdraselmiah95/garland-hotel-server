@@ -65,10 +65,6 @@ app.get("/", (req, res) => {
   res.send("Running Garland server");
 });
 
-app.get("/hello", (req, res) => {
-  res.send("Hello updated here.");
-});
-
 app.listen(port, () => {
   console.log("Running Garland Server on Port", port);
 });
