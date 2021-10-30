@@ -21,13 +21,36 @@ async function run() {
     await client.connect();
     const database = client.db("GarlandHotel");
     const offersCollection = database.collection("offers");
-    console.log("server is running");
+    const sportsCollection = database.collection("sports");
 
-    //
+    //get offers
     app.get("/offers", async (req, res) => {
       const cursor = offersCollection.find({});
       const offers = await cursor.toArray();
       res.send(offers);
+    });
+
+    //get sports
+    app.get("/sports", async (req, res) => {
+      const cursor = sportsCollection.find({});
+      const sports = await cursor.toArray();
+      res.send(sports);
+    });
+
+    //POST API
+
+    app.post("/sports", async (req, res) => {
+      const sports = req.body;
+      const result = await sportsCollection.insertOne(sports);
+      res.json(result);
+    });
+
+    //DELETE API
+    app.delete("/sports/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await sportsCollection.deleteOne(query);
+      res.json(result);
     });
 
     //end code
